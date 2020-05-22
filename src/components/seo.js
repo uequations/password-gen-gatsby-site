@@ -52,6 +52,10 @@ function SEO({ description, lang, meta, title }) {
           content: site.siteMetadata.keywords
         },
         {
+          property: `og:site_name`,
+          content: site.siteMetadata.title
+        },
+        {
           property: `og:title`,
           content: title
         },
@@ -70,6 +74,18 @@ function SEO({ description, lang, meta, title }) {
         {
           property: `og:image`,
           content: site.siteMetadata.image
+        },
+        {
+          property: `og:image:type`,
+          content: `image/png`
+        },
+        {
+          property: `og:image:width`,
+          content: 1047
+        },
+        {
+          property: `og:image:height`,
+          content: 698
         },
         {
           name: `twitter:card`,
