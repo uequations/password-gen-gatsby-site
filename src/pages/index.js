@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -7,11 +7,14 @@ import GoodPasswordInfo from "../components/GoodPasswordInfo"
 
 
 const IndexPage = () => (
-  <Layout>
-    <SEO title="Password Generator | Universal Equations"/>
-    <Hero/>
-    <GoodPasswordInfo/>
-  </Layout>
+  <Suspense fallback={<p>Loading...</p>}>
+    <Layout>
+      <SEO title="Password Generator | Universal Equations"/>
+      <Hero/>
+      <GoodPasswordInfo/>
+    </Layout>
+  </Suspense>
+
 )
 
 export default IndexPage

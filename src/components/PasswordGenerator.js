@@ -49,7 +49,7 @@ export default function PasswordGenerator() {
 
   const handleCheckboxChange = (event) => {
 
-    console.log("event target", event.target.name)
+    console.debug("event target", event.target.name)
     const newCheckBoxesState = { ...checkBoxes, [event.target.name]: event.target.checked }
     console.debug("handleCheckboxChange | beforeValidation ", JSON.stringify(newCheckBoxesState))
     if (event.target.name === "mixedCase" && newCheckBoxesState.mixedCase && !newCheckBoxesState.letters) {
@@ -60,7 +60,7 @@ export default function PasswordGenerator() {
     }
     setCheckboxes(newCheckBoxesState)
     console.debug("handleCheckboxChange | afterValidation ", JSON.stringify(newCheckBoxesState))
-    console.log("handleCheckboxChange | slider ", slider)
+    console.debug("handleCheckboxChange | slider ", slider)
     setPassword(generatePassword(newCheckBoxesState, slider))
   }
 
@@ -74,7 +74,7 @@ export default function PasswordGenerator() {
 
   const generatePassword = (checkboxes, sliderValue) => {
     console.debug("generatePassword | checkbox: ", JSON.stringify(checkboxes))
-    console.log("generatePassword | slider value: ", sliderValue)
+    console.debug("generatePassword | slider value: ", sliderValue)
     const newPassword = passwordGenerator.generate(
       {
         length: sliderValue,
@@ -91,7 +91,7 @@ export default function PasswordGenerator() {
   }
 
   const handleReGeneratePassword = () => {
-    console.log("handleReGeneratePassword | slider value: ", slider)
+    console.debug("handleReGeneratePassword | slider value: ", slider)
     setPassword(generatePassword(checkBoxes, slider))
   }
 

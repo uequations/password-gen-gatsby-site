@@ -10,12 +10,26 @@ import PropTypes from "prop-types"
 
 import Navbar from "./Navbar"
 import "./layout.css"
+import makeStyles from "@material-ui/core/styles/makeStyles"
+
+const useStyles = makeStyles((theme) => ({
+    container: {
+      width: "100%",
+      marginLeft: "auto",
+      marginRight: "auto",
+      height: "1000px",
+      backgroundColor: "#FFFFFF"
+    }
+  }
+))
 
 const Layout = ({ children }) => {
 
+  const classes = useStyles()
+
   return (
     <>
-      <div className={"container"}>
+      <div className={classes.container}>
         <Navbar/>
         <main>{children}</main>
 
