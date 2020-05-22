@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "medium"
   },
   paper: {
-    marginLeft: "10%",
-    marginRight: "10%",
+    marginLeft: "12%",
+    marginRight: "12%",
     backgroundColor: siteTheme.palette.primary.light
   },
   heroHeader: {

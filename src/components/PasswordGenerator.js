@@ -100,7 +100,7 @@ export default function PasswordGenerator() {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs/>
-          <Grid item xs={10}>
+          <Grid item xs={6}>
             <form>
               <TextField id="generated-password" fullWidth
                          value={typeof password === "string" ? password : "changeme123"}

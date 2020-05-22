@@ -12,7 +12,7 @@ export default function IndexPage() {
 
   useEffect(() => {
     setIsLoading(false)
-  })
+  }, [isLoading])
 
   return (isLoading ? (<Skeleton variant="rect"/>) : (
     <Layout>
