@@ -4,7 +4,7 @@ module.exports = {
     description: `Create strong passwords with our password generator.`,
     author: `@uequations`,
     url: "https://pwgen.uequations.com",
-    image: `src/images/keys.png`,
+    image: `https://res.cloudinary.com/uequations/image/upload/v1590180350/password-gen-gatsby-site/keys.png`,
     twitterUsername: `@uequations`,
     keywords: `passwords,Generator,options,security,character,create`
   },
