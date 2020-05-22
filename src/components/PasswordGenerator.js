@@ -8,10 +8,11 @@ import Typography from "@material-ui/core/Typography"
 import InputAdornment from "@material-ui/core/InputAdornment"
 import { ThemeProvider } from "@material-ui/core/styles"
 import siteTheme from "../theme"
-import { Security } from "@material-ui/icons"
+import { Refresh, Security } from "@material-ui/icons"
 import FormGroup from "@material-ui/core/FormGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import passwordGenerator from "generate-password"
+import IconButton from "@material-ui/core/IconButton"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -85,8 +86,12 @@ export default function PasswordGenerator() {
       }
     )
     console.log("generatePassword | password: ", newPassword)
-    console.log("generatePassword | length: ", newPassword.length)
+    console.debug("generatePassword | length: ", newPassword.length)
     return newPassword
+  }
+
+  const handleReGeneratePassword = () => {
+    setPassword(generatePassword(checkBoxes, slider.value))
   }
 
   return (
@@ -103,6 +108,16 @@ export default function PasswordGenerator() {
                            startAdornment: (
                              <InputAdornment position="start">
                                <Security color={"secondary"}/>
+                             </InputAdornment>
+                           ),
+                           endAdornment: (
+                             <InputAdornment position={"end"}>
+                               <IconButton
+                                 color={"primary"}
+                                 onClick={handleReGeneratePassword}
+                               >
+                                 <Refresh color={"secondary"}/>
+                               </IconButton>
                              </InputAdornment>
                            )
                          }}/>
