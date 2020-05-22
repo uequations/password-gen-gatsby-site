@@ -30,49 +30,63 @@ const useStyles = makeStyles((theme) => ({
 export default function PasswordGenerator() {
   const classes = useStyles()
 
-  const [state, setState] = useState({
+  const [checkBoxes, setCheckboxes] = useState({
     letters: true,
     mixedCase: true,
     punctuation: true,
     numbers: true
   })
 
-  const [value, setValue] = useState({
-    sliderValue: value
+  const [slider, setSlider] = useState({
+    value: 11
   })
 
   const [password, setPassword] = useState({
-      passwordText: password
+      text: "changeme123"
     }
   )
 
   const handleCheckboxChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked })
-    setPassword(generatePassword(state, value))
+
+    console.log("event target", event.target.name)
+    const newCheckBoxesState = { ...checkBoxes, [event.target.name]: event.target.checked }
+    console.log("handleCheckboxChange | beforeValidation ", JSON.stringify(newCheckBoxesState))
+    if (event.target.name === "mixedCase" && newCheckBoxesState.mixedCase && !newCheckBoxesState.letters) {
+      newCheckBoxesState.letters = true
+    }
+    if (event.target.name === "letters" && !newCheckBoxesState.letters && newCheckBoxesState.mixedCase) {
+      newCheckBoxesState.mixedCase = false
+    }
+    setCheckboxes(newCheckBoxesState)
+    console.log("handleCheckboxChange | afterValidation ", JSON.stringify(newCheckBoxesState))
+    console.log("handleCheckboxChange | slider ", slider)
+    setPassword(generatePassword(newCheckBoxesState, slider))
   }
 
   const handleSliderChange = (event, newValue) => {
-    if (value !== newValue) {
-      setValue(newValue)
-      setPassword(generatePassword(state, newValue))
+    if (slider.value !== newValue) {
+      console.log("newValue: ", newValue)
+      setSlider(newValue)
+      setPassword(generatePassword(checkBoxes, newValue))
     }
   }
 
-  const generatePassword = (checkboxState, sliderValue) => {
-    console.log("checkbox: ", JSON.stringify(checkboxState))
-    console.log("slider: ", JSON.stringify(sliderValue))
-    const password = passwordGenerator.generate(
+  const generatePassword = (checkboxes, sliderValue) => {
+    console.log("generatePassword | checkbox: ", JSON.stringify(checkboxes))
+    console.log("generatePassword | slider value: ", sliderValue)
+    const newPassword = passwordGenerator.generate(
       {
         length: sliderValue,
-        numbers: checkboxState.numbers,
-        lowercase: checkboxState.letters,
-        uppercase: checkboxState.mixedCase,
-        symbols: checkboxState.punctuation,
+        numbers: checkboxes.numbers,
+        lowercase: checkboxes.letters,
+        uppercase: checkboxes.mixedCase && checkboxes.letters,
+        symbols: checkboxes.punctuation,
         excludeSimilarCharacters: true
       }
     )
-    console.log("password: ", password)
-    return password
+    console.log("generatePassword | password: ", newPassword)
+    console.log("generatePassword | length: ", newPassword.length)
+    return newPassword
   }
 
   return (
@@ -80,11 +94,10 @@ export default function PasswordGenerator() {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs/>
-          <Grid item xs={8}>
+          <Grid item xs={10}>
             <form>
               <TextField id="generated-password" fullWidth
-                         value={typeof password === "string" ? password : "changeme"}
-                         defaultValue={"changeme"}
+                         value={typeof password === "string" ? password : "changeme123"}
                          InputProps={{
                            readOnly: true,
                            startAdornment: (
@@ -106,13 +119,13 @@ export default function PasswordGenerator() {
                 valueLabelDisplay="auto"
                 color={"secondary"}
                 onChange={handleSliderChange}
-                value={typeof value === "number" ? value : 11}
+                value={typeof slider === "number" ? slider : 11}
               />
               <FormGroup row>
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={state.letters}
+                      checked={checkBoxes.letters}
                       name={"letters"}
                       onChange={handleCheckboxChange}
                       color={"secondary"}
@@ -123,7 +136,7 @@ export default function PasswordGenerator() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={state.mixedCase}
+                      checked={checkBoxes.mixedCase}
                       name={"mixedCase"}
                       onChange={handleCheckboxChange}
                       color={"secondary"}
@@ -134,7 +147,7 @@ export default function PasswordGenerator() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={state.numbers}
+                      checked={checkBoxes.numbers}
                       name={"numbers"}
                       onChange={handleCheckboxChange}
                       color={"secondary"}
@@ -145,7 +158,7 @@ export default function PasswordGenerator() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={state.punctuation}
+                      checked={checkBoxes.punctuation}
                       name={"punctuation"}
                       onChange={handleCheckboxChange}
                       color={"secondary"}
