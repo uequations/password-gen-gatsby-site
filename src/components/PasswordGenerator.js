@@ -51,7 +51,7 @@ export default function PasswordGenerator() {
 
     console.log("event target", event.target.name)
     const newCheckBoxesState = { ...checkBoxes, [event.target.name]: event.target.checked }
-    console.log("handleCheckboxChange | beforeValidation ", JSON.stringify(newCheckBoxesState))
+    console.debug("handleCheckboxChange | beforeValidation ", JSON.stringify(newCheckBoxesState))
     if (event.target.name === "mixedCase" && newCheckBoxesState.mixedCase && !newCheckBoxesState.letters) {
       newCheckBoxesState.letters = true
     }
@@ -59,21 +59,21 @@ export default function PasswordGenerator() {
       newCheckBoxesState.mixedCase = false
     }
     setCheckboxes(newCheckBoxesState)
-    console.log("handleCheckboxChange | afterValidation ", JSON.stringify(newCheckBoxesState))
+    console.debug("handleCheckboxChange | afterValidation ", JSON.stringify(newCheckBoxesState))
     console.log("handleCheckboxChange | slider ", slider)
     setPassword(generatePassword(newCheckBoxesState, slider))
   }
 
   const handleSliderChange = (event, newValue) => {
     if (slider.value !== newValue) {
-      console.log("newValue: ", newValue)
+      console.debug("newValue: ", newValue)
       setSlider(newValue)
       setPassword(generatePassword(checkBoxes, newValue))
     }
   }
 
   const generatePassword = (checkboxes, sliderValue) => {
-    console.log("generatePassword | checkbox: ", JSON.stringify(checkboxes))
+    console.debug("generatePassword | checkbox: ", JSON.stringify(checkboxes))
     console.log("generatePassword | slider value: ", sliderValue)
     const newPassword = passwordGenerator.generate(
       {
@@ -85,13 +85,14 @@ export default function PasswordGenerator() {
         excludeSimilarCharacters: true
       }
     )
-    console.log("generatePassword | password: ", newPassword)
+    console.debug("generatePassword | password: ", newPassword)
     console.debug("generatePassword | length: ", newPassword.length)
     return newPassword
   }
 
   const handleReGeneratePassword = () => {
-    setPassword(generatePassword(checkBoxes, slider.value))
+    console.log("handleReGeneratePassword | slider value: ", slider)
+    setPassword(generatePassword(checkBoxes, slider))
   }
 
   return (
