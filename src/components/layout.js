@@ -11,6 +11,7 @@ import PropTypes from "prop-types"
 import Navbar from "./Navbar"
 import "./layout.css"
 import makeStyles from "@material-ui/core/styles/makeStyles"
+import Button from "@material-ui/core/Button"
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -35,8 +36,9 @@ const Layout = ({ children }) => {
 
         <section className="footer_banner" id="contact">
           <h2 className="hidden">Footer Banner Section </h2>
-          <p className="hero_header">SUBSCRIBE TO OUR <em>#DIgitalTransformation SPEAKS!</em> NEWSLETTER</p>
-          <div className="button">subscribe</div>
+          <p className="hero_header">SUBSCRIBE TO OUR <em>#DigitalTransformation SPEAKS!</em> NEWSLETTER</p>
+          <Button variant="contained" className="button"
+                  href={"https://sales.uequations.com/newsletter-signup/"}>subscribe</Button>
         </section>
 
         <div className="copyright">&copy;2020-<strong>ALL RIGHTS RESERVED</strong></div>
