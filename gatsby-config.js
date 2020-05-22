@@ -1,8 +1,12 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Password Generator | Universal Equations`,
+    description: `Create strong passwords with our password generator.`,
+    author: `@uequations`,
+    url: "https://pwgen.uequations.com",
+    image: `src/images/keys.png`,
+    twitterUsername: `@uequations`,
+    keywords: `passwords,Generator,options,security,character,create`
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -18,13 +22,13 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `Password Generator Site | Universal Equations`,
+        short_name: `Password Generator Site`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        background_color: `#9EA4D3`,
+        theme_color: `#380A13`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/icon.png` // This path is relative to the root of the site.
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality

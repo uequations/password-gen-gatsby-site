@@ -13,15 +13,19 @@ import { useStaticQuery, graphql } from "gatsby"
 function SEO({ description, lang, meta, title }) {
   const { site } = useStaticQuery(
     graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
+        query {
+            site {
+                siteMetadata {
+                    title
+                    description
+                    author
+                    url
+                    image
+                    twitterUsername
+                    keywords
+                }
+            }
         }
-      }
     `
   )
 
@@ -30,43 +34,59 @@ function SEO({ description, lang, meta, title }) {
   return (
     <Helmet
       htmlAttributes={{
-        lang,
+        lang
       }}
       title={title}
       titleTemplate={`%s | ${site.siteMetadata.title}`}
       meta={[
         {
           name: `description`,
-          content: metaDescription,
+          content: metaDescription
+        },
+        {
+          name: `image`,
+          content: site.siteMetadata.image
+        },
+        {
+          name: `keywords`,
+          content: site.siteMetadata.keywords
         },
         {
           property: `og:title`,
-          content: title,
+          content: title
         },
         {
           property: `og:description`,
-          content: metaDescription,
+          content: metaDescription
         },
         {
           property: `og:type`,
-          content: `website`,
+          content: `website`
+        },
+        {
+          property: `og:url`,
+          content: site.siteMetadata.url
         },
         {
           name: `twitter:card`,
-          content: `summary`,
+          content: `summary_large_image`
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.author,
+          content: site.siteMetadata.twitterUsername
         },
         {
           name: `twitter:title`,
-          content: title,
+          content: title
         },
         {
           name: `twitter:description`,
-          content: metaDescription,
+          content: metaDescription
         },
+        {
+          name: `twitter:image`,
+          content: site.siteMetadata.image
+        }
       ].concat(meta)}
     />
   )
@@ -75,14 +95,14 @@ function SEO({ description, lang, meta, title }) {
 SEO.defaultProps = {
   lang: `en`,
   meta: [],
-  description: ``,
+  description: ``
 }
 
 SEO.propTypes = {
   description: PropTypes.string,
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
 }
 
 export default SEO
