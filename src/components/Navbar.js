@@ -10,8 +10,8 @@ const Navbar = () => {
         <nav>
           <ul>
             <li><a href="https://www.uequations.com">HOME</a></li>
-            <li><a href="https://www.uequations.com/about">ABOUT</a></li>
-            <li><a href="https://www.uequations.com/contact">CONTACT</a></li>
+            <li><a href="https://www.uequations.com/about-us">ABOUT</a></li>
+            <li><a href="https://sales.uequations.com/contact-us-general-inquiry/">CONTACT</a></li>
           </ul>
         </nav>
       </header>
