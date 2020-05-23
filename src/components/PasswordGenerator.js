@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: "center"
-  }
+  },
+  passwordTextBox: {}
 }))
 
 export default function PasswordGenerator() {
@@ -100,13 +101,15 @@ export default function PasswordGenerator() {
   return (
     <ThemeProvider theme={siteTheme}>
       <div className={classes.root}>
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           <Grid item xs/>
-          <Grid item xs={6}>
+          <Grid item xs={10}>
             <form>
               <TextField id="generated-password" fullWidth
+                         size={"medium"}
                          value={typeof password.text === "string" ? password.text : "changeme123"}
                          InputProps={{
+                           size: 64,
                            readOnly: true,
                            startAdornment: (
                              <InputAdornment position="start">
