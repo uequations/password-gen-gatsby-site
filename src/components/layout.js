@@ -12,8 +12,10 @@ import Navbar from "./Navbar"
 import "./layout.css"
 import makeStyles from "@material-ui/core/styles/makeStyles"
 import Button from "@material-ui/core/Button"
-import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Grid"
+import siteTheme from "../theme"
+import { ThemeProvider } from "@material-ui/core/styles"
+
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -24,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#FFFFFF"
     },
     subscribeButton: {
-      justifyContent: "center"
+      alignItems: "center",
+      marginTop: "40px"
     }
 
   }
@@ -35,7 +38,7 @@ const Layout = ({ children }) => {
   const classes = useStyles()
 
   return (
-    <>
+    <ThemeProvider theme={siteTheme}>
       <div className={classes.container}>
         <Navbar/>
         <main>{children}</main>
@@ -43,16 +46,16 @@ const Layout = ({ children }) => {
         <section className="footer_banner" id="contact">
           <h2 className="hidden">Footer Banner Section </h2>
           <p className="hero_header">SUBSCRIBE TO OUR <em>#DigitalTransformation SPEAKS!</em> NEWSLETTER</p>
-          <Grid container spacing={2}>
-            <button className="button"
-                    href={"https://sales.uequations.com/newsletter-signup/"}>subscribe
-            </button>
+          <Grid container spacing={2} justify={"center"}>
+            <Button className={classes.subscribeButton} color={"secondary"} variant="contained"
+                    href={"https://sales.uequations.com/newsletter-signup/"}>SUBSCRIBE
+            </Button>
           </Grid>
         </section>
 
         <div className="copyright">&copy;2020-<strong>ALL RIGHTS RESERVED</strong></div>
       </div>
-    </>
+    </ThemeProvider>
   )
 }
 
