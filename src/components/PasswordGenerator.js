@@ -8,11 +8,12 @@ import Typography from "@material-ui/core/Typography"
 import InputAdornment from "@material-ui/core/InputAdornment"
 import { ThemeProvider } from "@material-ui/core/styles"
 import siteTheme from "../theme"
-import { Refresh, Security } from "@material-ui/icons"
+import { Assignment, Refresh, Security } from "@material-ui/icons"
 import FormGroup from "@material-ui/core/FormGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import passwordGenerator from "generate-password"
 import IconButton from "@material-ui/core/IconButton"
+import { CopyToClipboard } from "react-copy-to-clipboard/lib/Component"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,7 +44,8 @@ export default function PasswordGenerator() {
   })
 
   const [password, setPassword] = useState({
-      text: "changeme123"
+      text: "changeme123",
+      copied: false
     }
   )
 
@@ -61,14 +63,14 @@ export default function PasswordGenerator() {
     setCheckboxes(newCheckBoxesState)
     console.debug("handleCheckboxChange | afterValidation ", JSON.stringify(newCheckBoxesState))
     console.debug("handleCheckboxChange | slider ", slider)
-    setPassword(generatePassword(newCheckBoxesState, slider))
+    setPassword({ text: generatePassword(newCheckBoxesState, slider) })
   }
 
   const handleSliderChange = (event, newValue) => {
     if (slider.value !== newValue) {
       console.debug("newValue: ", newValue)
       setSlider(newValue)
-      setPassword(generatePassword(checkBoxes, newValue))
+      setPassword({ text: generatePassword(checkBoxes, newValue) })
     }
   }
 
@@ -103,7 +105,7 @@ export default function PasswordGenerator() {
           <Grid item xs={6}>
             <form>
               <TextField id="generated-password" fullWidth
-                         value={typeof password === "string" ? password : "changeme123"}
+                         value={typeof password.text === "string" ? password.text : "changeme123"}
                          InputProps={{
                            readOnly: true,
                            startAdornment: (
@@ -113,6 +115,14 @@ export default function PasswordGenerator() {
                            ),
                            endAdornment: (
                              <InputAdornment position={"end"}>
+                               <CopyToClipboard
+                                 text={typeof password.text === "string" ? password.text : { text: "changeme123" }}
+                                 onCopy={() => setPassword({ text: password.text, copied: true })}>
+                                 <IconButton
+                                   color={"primary"}>
+                                   <Assignment color={"secondary"}/>
+                                 </IconButton>
+                               </CopyToClipboard>
                                <IconButton
                                  color={"primary"}
                                  onClick={handleReGeneratePassword}
