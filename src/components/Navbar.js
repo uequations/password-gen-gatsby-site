@@ -5,7 +5,6 @@ import { ThemeProvider } from "@material-ui/core/styles"
 import Avatar from "@material-ui/core/Avatar"
 import Toolbar from "@material-ui/core/Toolbar"
 import Button from "@material-ui/core/Button"
-import Typography from "@material-ui/core/Typography"
 import makeStyles from "@material-ui/core/styles/makeStyles"
 import IconButton from "@material-ui/core/IconButton"
 
@@ -15,9 +14,6 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2)
-  },
-  title: {
-    flexGrow: 1
   }
 }))
 
@@ -33,9 +29,7 @@ const Navbar = () => {
               <Avatar
                 src={"https://res.cloudinary.com/uequations/image/upload/v1590188520/password-gen-gatsby-site/ueq_ps_crop_circle_logo_100px.png"}/>
             </IconButton>
-            <Typography className={classes.title} variant={"h5"}>
-              UNIVERSAL EQUATIONS
-            </Typography>
+
             <Button color={"secondary"} href="https://www.uequations.com">HOME</Button>
             <Button color={"secondary"} href="https://www.uequations.com/about-us">ABOUT</Button>
             <Button color={"secondary"} href="https://sales.uequations.com/contact-us-general-inquiry/">CONTACT</Button>

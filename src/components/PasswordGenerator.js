@@ -14,12 +14,14 @@ import FormControlLabel from "@material-ui/core/FormControlLabel"
 import passwordGenerator from "generate-password"
 import IconButton from "@material-ui/core/IconButton"
 import { CopyToClipboard } from "react-copy-to-clipboard/lib/Component"
+import Snackbar from "@material-ui/core/Snackbar"
+import Divider from "@material-ui/core/Divider"
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: siteTheme.palette.primary.main,
-    color: siteTheme.palette.secondary.main,
+    color: siteTheme.palette.secondary.contrastText,
     marginLeft: "0%",
     marginRight: "0%"
   },
@@ -27,7 +29,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "center"
   },
-  passwordTextBox: {}
+  passwordTextBox: {},
+  divider: {
+    height: 28,
+    margin: 4
+  }
 }))
 
 export default function PasswordGenerator() {
@@ -50,52 +56,63 @@ export default function PasswordGenerator() {
     }
   )
 
+  const [open, setOpen] = useState(false)
+
+  const handleClick = () => {
+    setOpen(true)
+    setPassword({ text: password.text, copied: true })
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return
+    }
+    setOpen(false)
+  }
+
   const handleCheckboxChange = (event) => {
 
-    console.debug("event target", event.target.name)
     const newCheckBoxesState = { ...checkBoxes, [event.target.name]: event.target.checked }
-    console.debug("handleCheckboxChange | beforeValidation ", JSON.stringify(newCheckBoxesState))
+
     if (event.target.name === "mixedCase" && newCheckBoxesState.mixedCase && !newCheckBoxesState.letters) {
       newCheckBoxesState.letters = true
     }
     if (event.target.name === "letters" && !newCheckBoxesState.letters && newCheckBoxesState.mixedCase) {
       newCheckBoxesState.mixedCase = false
     }
+
     setCheckboxes(newCheckBoxesState)
-    console.debug("handleCheckboxChange | afterValidation ", JSON.stringify(newCheckBoxesState))
-    console.debug("handleCheckboxChange | slider ", slider)
-    setPassword({ text: generatePassword(newCheckBoxesState, slider) })
+    setPassword({ text: generatePassword(newCheckBoxesState, slider.value), copied: false })
   }
 
   const handleSliderChange = (event, newValue) => {
-    if (slider.value !== newValue) {
-      console.debug("newValue: ", newValue)
-      setSlider(newValue)
-      setPassword({ text: generatePassword(checkBoxes, newValue) })
+
+    setSlider({ value: newValue })
+    if (slider.value && slider.value !== newValue) {
+      setPassword({ text: generatePassword(checkBoxes, newValue), copied: false })
     }
   }
 
   const generatePassword = (checkboxes, sliderValue) => {
-    console.debug("generatePassword | checkbox: ", JSON.stringify(checkboxes))
-    console.debug("generatePassword | slider value: ", sliderValue)
-    const newPassword = passwordGenerator.generate(
-      {
-        length: sliderValue,
-        numbers: checkboxes.numbers,
-        lowercase: checkboxes.letters,
-        uppercase: checkboxes.mixedCase && checkboxes.letters,
-        symbols: checkboxes.punctuation,
-        excludeSimilarCharacters: true
-      }
-    )
-    console.debug("generatePassword | password: ", newPassword)
-    console.debug("generatePassword | length: ", newPassword.length)
+
+    const passwordOptions = {
+      length: sliderValue,
+      numbers: checkboxes.numbers,
+      lowercase: checkboxes.letters,
+      uppercase: checkboxes.mixedCase && checkboxes.letters,
+      symbols: checkboxes.punctuation,
+      excludeSimilarCharacters: true
+    }
+
+    const newPassword = passwordGenerator.generate(passwordOptions)
+
     return newPassword
   }
 
-  const handleReGeneratePassword = () => {
-    console.debug("handleReGeneratePassword | slider value: ", slider)
-    setPassword(generatePassword(checkBoxes, slider))
+  const handleReGeneratePassword = (mouseEvent) => {
+
+    const newPassword = generatePassword(checkBoxes, slider.value)
+    setPassword({ text: newPassword, copied: false })
   }
 
   return (
@@ -108,9 +125,12 @@ export default function PasswordGenerator() {
               <TextField id="generated-password" fullWidth
                          size={"medium"}
                          value={typeof password.text === "string" ? password.text : "changeme123"}
+                         variant={"outlined"}
+                         color={siteTheme.palette.secondary.main}
                          InputProps={{
-                           size: 64,
+                           size: 32,
                            readOnly: true,
+                           color: siteTheme.palette.secondary.dark,
                            startAdornment: (
                              <InputAdornment position="start">
                                <Security color={"secondary"}/>
@@ -120,12 +140,23 @@ export default function PasswordGenerator() {
                              <InputAdornment position={"end"}>
                                <CopyToClipboard
                                  text={typeof password.text === "string" ? password.text : { text: "changeme123" }}
-                                 onCopy={() => setPassword({ text: password.text, copied: true })}>
+                                 onCopy={handleClick}>
                                  <IconButton
                                    color={"primary"}>
                                    <Assignment color={"secondary"}/>
                                  </IconButton>
                                </CopyToClipboard>
+                               <Snackbar
+                                 anchorOrigin={{
+                                   vertical: "bottom",
+                                   horizontal: "center"
+                                 }}
+                                 open={open}
+                                 autoHideDuration={5500}
+                                 onClose={handleClose}
+                                 message={"COPIED"}
+                               />
+                               <Divider className={classes.divider} orientation="vertical"/>
                                <IconButton
                                  color={"primary"}
                                  onClick={handleReGeneratePassword}
@@ -136,19 +167,19 @@ export default function PasswordGenerator() {
                            )
                          }}/>
               <Typography id="password-length-label" gutterBottom>
-                Password Length (4-64)
+                Password Length (4-32)
               </Typography>
               <Slider
                 defaultValue={11}
                 step={1}
                 min={4}
-                max={64}
+                max={32}
                 marks
                 aria-labelledby="password-length-label"
                 valueLabelDisplay="auto"
                 color={"secondary"}
                 onChange={handleSliderChange}
-                value={typeof slider === "number" ? slider : 11}
+                value={typeof slider.value === "number" ? slider.value : 11}
               />
               <FormGroup row>
                 <FormControlLabel

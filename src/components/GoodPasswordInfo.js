@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "justify",
     color: siteTheme.palette.secondary.main
+  },
+  aboutHeader: {
+    textAlign: "center",
+    color: "#380A13"
   }
 }))
 
@@ -33,7 +37,7 @@ export default function GoodPasswordInfo() {
         </Grid>
         <Grid item xs={6}>
           <Paper className={classes.paper}>
-            <h2>Passwords to avoid</h2>
+            <h2>PASSWORDS TO AVOID</h2>
           </Paper>
           <div className={classes.bullets}>
             <ul>
@@ -47,7 +51,7 @@ export default function GoodPasswordInfo() {
         </Grid>
         <Grid item xs={6}>
           <Paper className={classes.paper}>
-            <h2>Why are these passwords weak?</h2>
+            <h2>WHY ARE THESE PASSWORDS SO WEAK?</h2>
           </Paper>
           <div className={classes.bullets}>
             <ul>
