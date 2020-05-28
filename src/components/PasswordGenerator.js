@@ -103,7 +103,7 @@ export default function PasswordGenerator() {
       symbols: checkboxes.punctuation,
       excludeSimilarCharacters: true,
       strict: true,
-      exclude: "_;{}<>$+=\"?-"
+      exclude: "_;{}<>$+=\\\"?-"
     }
 
     const newPassword = passwordGenerator.generate(passwordOptions)
