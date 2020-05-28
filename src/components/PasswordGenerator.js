@@ -101,7 +101,9 @@ export default function PasswordGenerator() {
       lowercase: checkboxes.letters,
       uppercase: checkboxes.mixedCase && checkboxes.letters,
       symbols: checkboxes.punctuation,
-      excludeSimilarCharacters: true
+      excludeSimilarCharacters: true,
+      strict: true,
+      exclude: "_;{}<>$+=\"?-"
     }
 
     const newPassword = passwordGenerator.generate(passwordOptions)
